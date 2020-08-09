@@ -5,12 +5,12 @@ plugins:
   - serverless-domain-manager
 custom:
   wsgi:
-    app: app.app
+    app: lard_to_philosophy/app.app
     packRequirements: false
   pythonRequirements:
     dockerizePip: true
   customDomain:
-    domainName: lard-to-philosophy.benrcook.com
+    domainName: lard_to_philosophy.dev.benrcook.com
     basePath: ''
     stage: ${self:provider.stage}
     createRoute53Record: true
