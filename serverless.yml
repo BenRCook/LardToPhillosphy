@@ -1,14 +1,11 @@
 service: lardToPhilosophy
 plugins:
   - serverless-python-requirements
-  - serverless-wsgi
   - serverless-domain-manager
 custom:
-  wsgi:
-    app: lard_to_philosophy/app.app
-    packRequirements: false
   pythonRequirements:
     dockerizePip: true
+    usePipenv: true
   customDomain:
     domainName: 'lard-to-philosophy.dev.benrcook.com'
     basePath: ''
@@ -24,7 +21,7 @@ provider:
   region: eu-west-1
 functions:
   app:
-    handler: wsgi_handler.handler
+    handler: lard_to_philosophy/app.handler
     events:
       - http: ANY /
       - http: 'ANY {proxy+}'
