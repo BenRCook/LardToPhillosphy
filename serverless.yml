@@ -8,12 +8,11 @@ custom:
     app: lard_to_philosophy/app.app
     packRequirements: false
   pythonRequirements:
-    dockerizePip: true
+    dockerizePip: 'non-linux'
   customDomain:
-    domainName: lard_to_philosophy.dev.benrcook.com
+    domainName: 'lard-to-philosophy.dev.benrcook.com'
     basePath: ''
     stage: ${self:provider.stage}
-    createRoute53Record: true
 package:
   exclude:
     - node_modules/**
@@ -25,7 +24,7 @@ provider:
   region: eu-west-1
 functions:
   app:
-    handler: wsgi.handler
+    handler: wsgi_handler.handler
     events:
       - http: ANY /
       - http: 'ANY {proxy+}'
