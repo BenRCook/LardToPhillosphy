@@ -1,0 +1,56 @@
+service: lardToPhilosophy
+plugins:
+  - serverless-python-requirements
+  - serverless-wsgi
+  - serverless-domain-manager
+custom:
+  wsgi:
+    app: app.app
+    packRequirements: false
+  pythonRequirements:
+    dockerizePip: true
+  customDomain:
+    domainName: lard-to-philosophy.benrcook.com
+    basePath: ''
+    stage: ${self:provider.stage}
+    createRoute53Record: true
+package:
+  exclude:
+    - node_modules/**
+    - venv/**
+provider:
+  name: aws
+  runtime: python3.8
+  stage: dev
+  region: eu-west-1
+functions:
+  app:
+    handler: wsgi.handler
+    events:
+      - http: ANY /
+      - http: 'ANY {proxy+}'
+resources:
+  Resources:
+    budget:
+      Type: "AWS::Budgets::Budget"
+      Properties:
+        Budget:
+          BudgetLimit:
+            Amount: 10
+            Unit: USD
+          TimeUnit: MONTHLY
+          TimePeriod:
+            Start: 1225864800
+            End: 1926864800
+          BudgetType: COST
+          CostFilters:
+            AZ:
+              - eu-west-1
+        NotificationsWithSubscribers:
+          - Notification:
+              NotificationType: ACTUAL
+              ComparisonOperator: GREATER_THAN
+              Threshold: 5
+            Subscribers:
+              - SubscriptionType: EMAIL
+                Address: budget@benrcook.com
