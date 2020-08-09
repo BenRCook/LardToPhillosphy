@@ -1,4 +1,4 @@
-name: Deploy serverless to AWS dev
+name: Deploy to AWS dev
 on:
   push:
     branches: [ master ]
@@ -14,15 +14,13 @@ jobs:
         node-version: '12.x'
     - name: Install dependencies
       run: npm install
-    - name: Set up Python 3.8
-      uses: actions/setup-python@v2
+
+    - name: Configure credentials
+      uses: aws-actions/configure-aws-credentials@v1
       with:
-        python-version: 3.8
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: eu-west-1
 
     - name: Serverless deploy
-      uses: serverless/github-action@master
-      with:
-        args: deploy
-      env:
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      run: npm run deploy

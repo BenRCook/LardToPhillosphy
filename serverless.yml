@@ -8,7 +8,8 @@ custom:
     app: lard_to_philosophy/app.app
     packRequirements: false
   pythonRequirements:
-    dockerizePip: 'non-linux'
+    dockerizePip: true
+    pythonBin: python
   customDomain:
     domainName: 'lard-to-philosophy.dev.benrcook.com'
     basePath: ''
