@@ -9,7 +9,6 @@ custom:
     packRequirements: false
   pythonRequirements:
     dockerizePip: true
-    pythonBin: python
   customDomain:
     domainName: 'lard-to-philosophy.dev.benrcook.com'
     basePath: ''
