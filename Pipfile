@@ -1,0 +1,24 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+pytest = "*"
+flake8 = "*"
+uvicorn = "*"
+
+[packages]
+requests-html = "*"
+fastapi = "*"
+mangum = "*"
+jinja2 = "*"
+requests = "*"
+
+[requires]
+python_version = "3.8"
+
+[scripts]
+local = "uvicorn lard_to_philosophy.app:app"
+test = "pytest"
+lint = "flake8 lard_to_philosophy --count --max-complexity=10 --max-line-length=120 --statistics"

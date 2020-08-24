@@ -1,17 +1,24 @@
-from flask import Flask, render_template, make_response
+import os.path
+import pathlib
 
-app = Flask(__name__)
+from fastapi import FastAPI, Request
+from fastapi.responses import HTMLResponse
+from fastapi.templating import Jinja2Templates
+from mangum import Mangum
+
+app = FastAPI()
+template_dir = os.path.join(pathlib.Path(__file__).parent.absolute(), "templates")
+templates = Jinja2Templates(directory=template_dir)
 
 
-@app.route("/")
-def main():
-    return render_template('index.html')
+@app.get("/", response_class=HTMLResponse)
+def main(request: Request):
+    return templates.TemplateResponse("index.html", {"request": request})
 
 
-@app.route("/hello")
+@app.get("/hello", status_code=200)
 def hello():
-    return make_response("Hello World", 200)
+    return "Hello World"
 
 
-if __name__ == "__main__":
-    app.run()
+handler = Mangum(app)
