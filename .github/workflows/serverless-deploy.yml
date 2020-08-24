@@ -22,8 +22,12 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: eu-west-1
 
+    - name: Set up Python 3.8
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8
     - name: Install pipenv
-      uses: dschep/install-pipenv-action@v1
+      run: pip install pipenv
 
     - name: Serverless deploy
       run: npm run deploy
